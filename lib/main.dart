@@ -1,8 +1,10 @@
 import 'package:bonus_app_admin/exports.dart';
-import 'package:bonus_app_admin/pages/login_page.dart';
-import 'package:get/get.dart';
+import 'package:bonus_app_admin/pages/main_page.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await GetStorage.init();
+  await dotenv.load(fileName: ".env");
   runApp(const MyApp());
 }
 
@@ -20,7 +22,9 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: LoginPage()
+      home: 
+      // MainPage()
+      LoginPage()
     );
   }
 }
