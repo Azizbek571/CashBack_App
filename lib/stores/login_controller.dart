@@ -3,51 +3,45 @@ import 'package:bonus_app_admin/exports.dart';
 import 'package:bonus_app_admin/pages/main_page.dart';
 import 'package:dio/dio.dart';
 
-class LoginController extends GetxController{
+class LoginController extends GetxController {
   TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
-  bool loading=false;
+  bool loading = false;
   var myDio = MyDio().dio();
 
-  bool validate(){
+  bool validate() {
     return username.text.trim().isEmpty || password.text.trim().isEmpty;
   }
-  snackbar(String message){
-    Get.snackbar("Error", message);
+
+  snackbar(String message) {
+    Get.snackbar("Error", message,
+        backgroundColor: Colors.red, colorText: Colors.white);
   }
 
-  void login()async{
-   if(validate()){
-    snackbar("Enter the full info");
-    return;
-   }
-   if(loading)return;
-   try{
-    loading=true;
-    update();
-    // await Future.delayed(Duration(seconds: 3));
-    var res = await myDio.post('/admin/login', data:{
-      "username": username.text.trim(),
-      "password": password.text.trim(),
-    });
-    print(res.data['token']);
-    GetStorage().write('token', res.data['token']);
-  Get.off(()=>const MainPage());
-   }on DioException catch(err){
-    snackbar(err.response!.data['message']);
-   }finally{
-    loading=false;
-    update();
-   }
+  void login() async {
+    if (validate()) {
+      snackbar("Enter the full info");
+      return;
+    }
+    if (loading) return;
+    try {
+      loading = true;
+      update();
+      // await Future.delayed(Duration(seconds: 3));
+      var res = await myDio.post('/admin/login', data: {
+        "username": username.text.trim(),
+        "password": password.text.trim(),
+      });
+      print(res.data['token']);
+      GetStorage().write('token', res.data['token']);
+      Get.off(() => const MainPage());
+    } on DioException catch (err) {
+      snackbar(err.response!.data['message']);
+    } finally {
+      loading = false;
+      update();
+    }
   }
-
-
-
-
-
-
-
-
 
   // void register()async{
   //   if(loading)return;

@@ -14,17 +14,16 @@ class _LoginPageState extends State<LoginPage> {
     return GetBuilder<LoginController>(
       builder: (controller) {
         return Scaffold(
-        body: controller.loading ? const Center(child: CircularProgressIndicator()) : 
+        body: controller.loading ? const Center(child: CircularProgressIndicator()):
          SingleChildScrollView(
           child: SizedBox(
             height: MediaQuery.sizeOf(context).height,
             child: Padding(
               padding: const EdgeInsets.all(24),
-
+              
               child: 
               Column(
                 children: [
-
                   Image.asset('assets/images/logo.png', width: 150),
                   const SizedBox(height: 100),
                    const Text(
@@ -46,9 +45,10 @@ class _LoginPageState extends State<LoginPage> {
                   const SizedBox(height: 15),
                   Button(
                     onTap: () {
+                      print('object');
                       controller.login();
                     },
-                    text: "Enter",
+                    text: "Enter test",
                   ),
                   const SizedBox(height: 100),
                   //  Row(

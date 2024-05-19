@@ -1,4 +1,6 @@
+import 'package:bonus_app_admin/config/icons.dart';
 import 'package:bonus_app_admin/exports.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -20,15 +22,25 @@ class _MainPageState extends State<MainPage> {
                 var item = controller.menus[index];
                 return Expanded(
                     child: InkWell(
-                      onTap: () {
-                        controller.selectPage(index);
-                      },
-                      child: Text(
+                  onTap: () {
+                    controller.selectPage(index);
+                  },
+                  child: Column(
+                    children: [
+                      SvgPicture.asset(item['icon'],
+                          width: 20,
+                          color: controller.currentPage == index
+                              ? Colors.red
+                              : Colors.grey[700]),
+                      Text(
                         item['text'],
+                        style: TextStyle(color: controller.currentPage == index ? Colors.red : Colors.grey[700]),
                         textAlign: TextAlign.center,
                         overflow: TextOverflow.ellipsis,
                       ),
-                    ));
+                    ],
+                  ),
+                ));
               }),
             ),
           ),

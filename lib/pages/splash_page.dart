@@ -1,7 +1,6 @@
-import 'dart:async';
 
 import 'package:bonus_app_admin/exports.dart';
-import 'package:bonus_app_admin/pages/main_page.dart';
+
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
