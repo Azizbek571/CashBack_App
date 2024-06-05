@@ -1,5 +1,6 @@
 import 'package:bonus_app_admin/exports.dart';
 import 'package:bonus_app_admin/pages/main_page.dart';
+import 'package:bonus_app_admin/pages/splash_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
       ),
       home: 
       // MainPage()
-      LoginPage()
+      const SplashPage()
     );
   }
 }

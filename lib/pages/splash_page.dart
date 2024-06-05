@@ -12,7 +12,7 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage> {
  void hasToken(){
   var token = GetStorage().read('token');
-  Timer(Duration(seconds: 2), (){
+  Timer(const Duration(seconds: 2), (){
  if(token==null){
     Get.off(()=>const LoginPage());
   }else{

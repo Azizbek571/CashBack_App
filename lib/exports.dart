@@ -17,6 +17,10 @@ export 'package:bonus_app_admin/components/home/UserInfo.dart';
 export 'package:bonus_app_admin/pages/home/market_status.dart';
 export 'package:toggle_switch/toggle_switch.dart';
 export 'package:bonus_app_admin/stores/rate_controller.dart';
+export 'package:bonus_app_admin/config/my_dio.dart';
+export 'package:bonus_app_admin/models/rate.dart';
+export 'package:bonus_app_admin/stores/customer_controller.dart';
+
 
 
 

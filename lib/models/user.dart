@@ -1,6 +1,3 @@
-import 'package:bonus_app_admin/exports.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 
 class UserModel {
   int id;

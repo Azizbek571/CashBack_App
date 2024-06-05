@@ -1,8 +1,4 @@
-
 import 'package:bonus_app_admin/exports.dart';
-
-
-
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,6 +9,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   HomeController controller = Get.put(HomeController());
+  
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(
@@ -48,8 +45,9 @@ class _HomePageState extends State<HomePage> {
                                   controller.scanBarcode();
                                 },
                                 text: "Scan the barcode"),
-                                controller.statusMarket==null?SizedBox():
-                            MarketStatus(info: controller.statusMarket!)
+                            controller.statusMarket == null
+                                ? SizedBox()
+                                : MarketStatus(info: controller.statusMarket!)
                           ],
                         ),
                       )));
@@ -57,4 +55,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-

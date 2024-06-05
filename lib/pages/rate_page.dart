@@ -10,6 +10,8 @@ class RatePage extends StatefulWidget {
 
 class _RatePageState extends State<RatePage> {
   RateController controller = Get.put(RateController());
+  TextEditingController controllerUser = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<RateController>(
@@ -20,21 +22,28 @@ class _RatePageState extends State<RatePage> {
             actions: [
               IconButton(
                   onPressed: () {
-                    Get.to(() => AddRates());
+                    controller.sum.clear();
+                    controller.percent.clear();
+                    Get.to(() => const AddRates());
+                    controller.selectedRateId = null;
                   },
-                  icon: Icon(Icons.add))
+                  icon: const Icon(Icons.add))
             ],
           ),
-          body:
-          controller.loading?
-          CircularProgressIndicator():
-           SingleChildScrollView(
-            child: Column(
-              children: [
-                RateItem()
-              ],
-            ),
-          ),
+          body: controller.loading
+              ? const CircularProgressIndicator()
+              : SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      ...List.generate(controller.rates.length, (index) {
+                        return RateItem(
+                          item: controller.rates[index],
+                          controller: controller,
+                        );
+                      })
+                    ],
+                  ),
+                ),
         );
       },
     );
@@ -42,50 +51,88 @@ class _RatePageState extends State<RatePage> {
 }
 
 class RateItem extends StatelessWidget {
-  const RateItem({
+  RateItem({
     super.key,
+    required this.item,
+    required this.controller,
   });
+  RateModel item;
+  RateController controller;
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  children: [Text("Till"), Text("50000")],
-                ),
-                Column(
-                  children: [Text("2%"), Text("2 max bonus")],
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment:MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  children: [
-                    IconButton(
-                        onPressed: () {}, icon: Icon(Icons.check_box)),
-                Text("State: Active")
-    
-                  ],
-                ),
-                Column(
-                  children: [
-                    IconButton(
-                        onPressed: () {}, icon: Icon(Icons.delete)),
-                Text("State: Active")
-    
-                  ],
-                ),
-              ],
-            )
-          ],
+    return GestureDetector(
+      onLongPress: () {
+        controller.sum.text = item.summa.toString();
+        controller.percent.text = item.percent.toString();
+        controller.selectedRateId = item.id;
+
+        Get.to(() => const AddRates());
+      },
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    children: [const Text("Till"), Text(item.summa.toString())],
+                  ),
+                  Column(
+                    children: [
+                      Text('${item.percent}%'),
+                      Text(
+                          "${((item.percent / 100) * item.summa).ceil()}max bonus")
+                    ],
+                  ),
+                ],
+              ),
+              const SizedBox(height: 15),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    children: [
+                      IconButton(
+                          onPressed: () {
+                            Get.dialog(ConfirmDialog(
+                                title: "Attention!",
+                                text:
+                                    "Do you want to confirm the rate with ${item.summa} ${item.active == 0 ? 'to activate?' : 'deactivate?'}",
+                                onTap: () {
+                                  controller.changeActive(item.id);
+                                }));
+                          },
+                          icon: Icon(item.active == 1
+                              ? Icons.check_box
+                              : Icons.check_box_outline_blank)),
+                      Text(item.active == 1 ? "Active" : "Not active")
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      IconButton(
+                          onPressed: () {
+                            Get.dialog(
+                              ConfirmDialog(
+                                  title: "Attention!",
+                                  text:
+                                      'Do you confirm to delete the rate with ${item.summa} and ${item.percent} %?',
+                                  onTap: () {
+                                    controller.deleteRate(item.id);
+                                  }),
+                            );
+                          },
+                          icon: const Icon(Icons.delete)),
+                      const Text("Delete")
+                    ],
+                  ),
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );

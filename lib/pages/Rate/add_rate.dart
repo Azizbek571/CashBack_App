@@ -14,28 +14,44 @@ class _AddRatesState extends State<AddRates> {
     return GetBuilder<RateController>(
       builder: (controller) {
         return Scaffold(
-        appBar: AppBar(
-          title: const Text("Add the %"),
-        ),
-        body: Container(
-          padding: const EdgeInsets.symmetric(horizontal:16 ),
-          constraints: BoxConstraints(maxWidth: 500),
-            child: 
-            controller.loading?CircularProgressIndicator():
-            Column(
-          children: [
-            Input(hintText: "The amount of rate", controller: controller.sum, type: TextInputType.number,),
-            const SizedBox(height: 10),
-            Input(hintText: "The percent of rate", controller: controller.percent, type: TextInputType.number,),
-            const SizedBox(height: 10),
-      
-            Button(onTap: (){controller.add();}, text: "Add")
-      
-          ],
-        )),
-      );
+          appBar: AppBar(
+            title: Text(
+                "Add ${controller.selectedRateId == null ? '%' : 'changes'}"),
+          ),
+          body: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              constraints: BoxConstraints(maxWidth: 500),
+              child: controller.loading
+                  ? CircularProgressIndicator()
+                  : Column(
+                      children: [
+                        Input(
+                          hintText: "The amount of rate",
+                          controller: controller.sum,
+                          type: TextInputType.number,
+                        ),
+                        const SizedBox(height: 10),
+                        Input(
+                          hintText: "The percent of rate",
+                          controller: controller.percent,
+                          type: TextInputType.number,
+                        ),
+                        const SizedBox(height: 10),
+                        Button(
+                            onTap: () {
+                              if (controller.selectedRateId == null) {
+                                controller.add();
+                              } else {
+                                controller.edit();
+                              }
+                            },
+                            text: controller.selectedRateId == null
+                                ? "add"
+                                : "Change")
+                      ],
+                    )),
+        );
       },
-      
     );
   }
 }

@@ -1,7 +1,6 @@
 import 'package:bonus_app_admin/exports.dart';
 import 'package:bonus_app_admin/pages/home/add_bonus.dart';
 import 'package:bonus_app_admin/pages/home/remove_bonus.dart';
-import 'package:bonus_app_admin/stores/home_controller.dart';
 
 class ActionsPage extends StatefulWidget {
   const ActionsPage({super.key});

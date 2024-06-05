@@ -1,6 +1,6 @@
 import 'package:bonus_app_admin/config/icons.dart';
 import 'package:bonus_app_admin/exports.dart';
-import 'package:bonus_app_admin/pages/customers_page.dart';
+import 'package:bonus_app_admin/pages/customers/customers_page.dart';
 import 'package:bonus_app_admin/pages/purchase.dart';
 import 'package:bonus_app_admin/pages/rate_page.dart';
 

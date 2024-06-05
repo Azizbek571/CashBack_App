@@ -15,6 +15,8 @@ class HomeController extends GetxController {
       loading = true;
       var res = await myDio.get('/admin/auth');
       user = UserModel.fromJson(res.data);
+    fetchStatusMarket();
+
     } catch (err) {
       print(err);
     } finally {
@@ -31,7 +33,6 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     fetchAuth();
-    fetchStatusMarket();
     super.onInit();
   }
 
